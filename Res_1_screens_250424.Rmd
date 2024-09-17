@@ -1008,6 +1008,7 @@ theme_bw(base_size = 15)
 plot8
 ggsave("FigS2_20.eps", width = 6, height = 4.3, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 ```
+
 ```{r}
 # MHHES1
 # check L2FC PLASMID vs Gene
@@ -1381,6 +1382,7 @@ annotated_data <- annotated_data %>%
 annotated_data <- annotated_data %>%
   mutate(p_value_MAGeCK_PC9_Osim = ifelse(high_in_treatment_MAGeCK_PC9_Osim == "True", p.high_MAGeCK_PC9_Osim, p.low_MAGeCK_PC9_Osim))
 ```
+
 ```{r}
 #read in MAGeCK datasets from Shriram
 #MHHES1
@@ -1446,7 +1448,6 @@ theme_classic()
 plot1 <- plot1 +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_Tram_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot1
-ggsave("Fig4a.eps", width = 6, height = 4.3, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 
 plot2 <- ggplot(subset(annotated_data, gene_alias %in% c(targets)), aes(x=L2FC_HT29_Control_plasmid_average_zscore, y= L2FC_HT29_Pict_plasmid_average_zscore, colour = gene_alias, shape = editor)) + 
 geom_point(position = pos, alpha = 1, size =3) +
@@ -1460,7 +1461,6 @@ theme_classic()
 plot2 <- plot2 +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_Pict_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot2
-ggsave("Fig2a.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 
 pos <- position_jitter(seed = 2, width = 0.2, height = 0.2)
 
@@ -1478,7 +1478,6 @@ theme_classic()
 plot3 <- plot3 +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_DebCet_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot3
-ggsave("Fig4b.eps", width = 6, height = 4.3, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 ```
 
 ```{r}
@@ -1492,6 +1491,23 @@ geom_vline(xintercept=c(0,0),linetype="dotted") +
 geom_text_repel(aes(label=ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene), ifelse( L2FC_HT29_Tram_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == TRUE) & (is.na(most_severe_consequence) == FALSE), paste(Gene, most_severe_consequence), ifelse(L2FC_HT29_Tram_plasmid_average_zscore < -3.5 & L2FC_HT29_Control_plasmid_average_zscore > - 0.25, paste(Gene, most_severe_consequence), ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 3 & L2FC_HT29_Control_plasmid_average_zscore < -3 & (is.na(Gene) == FALSE), paste(Gene), ""))))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
 scale_color_manual(values =c("royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black", "grey75", "red3")) +
 scale_shape_manual(values =c(19, 1)) +
+theme_classic()
+plot1 <- plot1 +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_Tram_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot1
+```
+
+```{r}
+#for NG editors
+
+plot1 <- ggplot(subset(annotated_data, gene_alias %in% c(targets)), aes(x=L2FC_HT29_Control_plasmid_average_zscore, y= L2FC_HT29_Tram_plasmid_average_zscore, colour = gene_alias, shape = editor)) +
+geom_point(position = pos, alpha = 1, size = 1) +
+labs(title= "", x="HT-29 control vs plasmid (z-score)", y = "HT-29 trametinib vs plasmid (z-score)", colour = "gene", shape = "editor") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene), ifelse( L2FC_HT29_Tram_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == TRUE) & (is.na(most_severe_consequence) == FALSE), paste(Gene, most_severe_consequence), ifelse(L2FC_HT29_Tram_plasmid_average_zscore < -3.5 & L2FC_HT29_Control_plasmid_average_zscore > - 0.25, paste(Gene, most_severe_consequence), ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 3 & L2FC_HT29_Control_plasmid_average_zscore < -3 & (is.na(Gene) == FALSE), paste(Gene), ""))))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black", "grey75", "red3")) +
+scale_shape_manual(values =c(2, 1)) +
 theme_classic()
 plot1 <- plot1 +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_Tram_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
@@ -1561,7 +1577,6 @@ scale_shape_manual(values =c(19, 1)) +
 theme_classic() +
 geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_H23_Adag_plasmid_average_zscore, y = L2FC_H23_Sotor_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot1
-ggsave("Fig2b.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 ```
 
 
@@ -1578,26 +1593,24 @@ geom_point(position = pos, alpha = 1, size =3) +
 labs(title= " ", x="PC9 control vs plasmid (z-score)", y = "PC9 gefitinib vs plasmid (z-score)", colour = "gene") +
 geom_hline(yintercept=c(0,0),linetype="dotted") +
 geom_vline(xintercept=c(0,0),linetype="dotted") +
-geom_text_repel(aes(label=ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore < -3.5 & L2FC_PC9_Control_plasmid_average_zscore > -0.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position, most_severe_consequence), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Gefit_plasmid_average_zscore < -3.5 & L2FC_PC9_Control_plasmid_average_zscore > -0.5 & (is.na(Amino_Acid_Position) == TRUE), paste(Gene, most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore < -3 & L2FC_PC9_Control_plasmid_average_zscore > -2 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position, most_severe_consequence), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Gefit_plasmid_average_zscore < -3 & L2FC_PC9_Control_plasmid_average_zscore > -2 & (is.na(Amino_Acid_Position) == TRUE), paste(Gene, most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
 scale_color_manual(values =c("grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black")) +
 scale_shape_manual(values =c(19, 1)) +
 theme_classic() +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Gefit_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot1
-ggsave("Fig2c.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 
 plot2 <- ggplot(subset(annotated_data, Gene %in% c(targets)), aes(x=L2FC_PC9_Control_plasmid_average_zscore, y= L2FC_PC9_Osim_plasmid_average_zscore, colour = Gene, shape = editor)) + 
 geom_point(position = pos, alpha = 1, size =3) +
 labs(title= " ", x="PC9 control vs plasmid (z-score)", y = "PC9 osimertinib vs plasmid (z-score)", colour = "gene") +
 geom_hline(yintercept=c(0,0),linetype="dotted") +
 geom_vline(xintercept=c(0,0),linetype="dotted") +
-geom_text_repel(aes(label=ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Amino_Acid_Position), ifelse(L2FC_PC9_Osim_plasmid_average_zscore < -5 & L2FC_PC9_Control_plasmid_average_zscore > -1 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position, most_severe_consequence), ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Osim_plasmid_average_zscore < -5 & L2FC_PC9_Control_plasmid_average_zscore > -1 & (is.na(Amino_Acid_Position) == TRUE), paste(most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Amino_Acid_Position), ifelse(L2FC_PC9_Osim_plasmid_average_zscore < -3 & L2FC_PC9_Control_plasmid_average_zscore > -2 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position, most_severe_consequence), ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Osim_plasmid_average_zscore < -3 & L2FC_PC9_Control_plasmid_average_zscore > -2 & (is.na(Amino_Acid_Position) == TRUE), paste(most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
 scale_color_manual(values =c("grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black" )) +
 scale_shape_manual(values =c(19, 1)) +
 theme_classic() +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Osim_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot2
-ggsave("Fig2d.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 ```
 
 ```{r}
@@ -1631,6 +1644,149 @@ scale_shape_manual(values =c(19, 1)) +
 theme_classic() +
   geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Osim_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
 plot2
+```
+```{r}
+# dot plots _ proliferation - PC9 average - for presentations
+# with rug plots
+
+targets <- c("EGFR", "KRAS", "MYC", "PARP1", "PARP2", "MAP2K1", "MAP2K2", "BCL2", "BRAF", "AKT1", "PIK3CA")
+
+plot1 <- ggplot(subset(annotated_data, Gene %in% c(targets)), aes(x=L2FC_PC9_Control_plasmid_average_zscore, y= L2FC_PC9_Gefit_plasmid_average_zscore, colour = Gene, shape = editor)) + 
+geom_point(alpha = 1, size =3) +
+labs(title= " ", x="PC9 control vs plasmid (z-score)", y = "PC9 gefitinib vs plasmid (z-score)", colour = "gene") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore < -3.5 & L2FC_PC9_Control_plasmid_average_zscore > -0.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, most_severe_consequence), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Gefit_plasmid_average_zscore < -3.5 & L2FC_PC9_Control_plasmid_average_zscore > -0.5 & (is.na(Amino_Acid_Position) == TRUE), paste(Gene, most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black")) +
+scale_shape_manual(values =c(19, 1)) +
+theme_classic() +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Gefit_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot1
+
+plot2 <- ggplot(subset(annotated_data, Gene %in% c(targets)), aes(x=L2FC_PC9_Control_plasmid_average_zscore, y= L2FC_PC9_Osim_plasmid_average_zscore, colour = Gene, shape = editor)) + 
+geom_point(alpha = 1, size =3) +
+labs(title= " ", x="PC9 control vs plasmid (z-score)", y = "PC9 osimertinib vs plasmid (z-score)", colour = "gene") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene), ifelse(L2FC_PC9_Osim_plasmid_average_zscore < -5 & L2FC_PC9_Control_plasmid_average_zscore > -1 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, most_severe_consequence), ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Osim_plasmid_average_zscore < -5 & L2FC_PC9_Control_plasmid_average_zscore > -1 & (is.na(Amino_Acid_Position) == TRUE), paste(most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black" )) +
+scale_shape_manual(values =c(19, 1)) +
+theme_classic() +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Osim_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot2
+```
+
+```{r}
+# dot plots _ proliferation - HT-29 - ***FOR NG EDITORS***
+# using gene_alias and FDR
+targets <- c("EGFR", "KRAS", "MYC", "PARP1", "PARP2", "MAP2K1", "MAP2K2", "BCL2", "BRAF", "AKT1", "PIK3CA")
+
+annotated_data$gene_alias <- factor(annotated_data$gene_alias, levels = c("AKT1", "BCL2", "BRAF", "EGFR", "KRAS", "MAP2K1", "MAP2K2", "MYC", "PARP1", "PARP2", "PIK3CA", "non-essential", "intergenic",  "non-targeting", "essential"))
+
+pos <- position_jitter(width = 0.2, height = 0.2)
+
+plot1 <- ggplot(subset(annotated_data, gene_alias %in% c(targets)), aes(x=L2FC_HT29_Control_plasmid_average_zscore, y= L2FC_HT29_Tram_plasmid_average_zscore, colour = gene_alias, shape = editor)) +
+geom_point(position = pos, alpha = 1, size = 1) +
+labs(title= "", x="HT-29 control vs plasmid (z-score)", y = "HT-29 trametinib vs plasmid (z-score)", colour = "gene", shape = "editor") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 9 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene,Amino_Acid_Position),
+                      ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == FALSE), paste(Amino_Acid_Position), 
+                             ifelse( L2FC_HT29_Tram_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == TRUE) & (is.na(most_severe_consequence) == FALSE), paste(Gene, most_severe_consequence), ifelse(L2FC_HT29_Tram_plasmid_average_zscore < -3.5 & L2FC_HT29_Control_plasmid_average_zscore > - 0.25, paste(Gene, most_severe_consequence),                                                                                                                                                                  ifelse(L2FC_HT29_Tram_plasmid_average_zscore > 3 & L2FC_HT29_Control_plasmid_average_zscore < -3 & (is.na(Amino_Acid_Position) == FALSE), paste(Amino_Acid_Position), "")))))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black", "grey75", "red3")) +
+scale_shape_manual(values =c(2, 1)) +
+theme_classic()
+plot1 <- plot1 +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_Tram_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot1
+ggsave("Fig4a.eps", width = 6, height = 4.3, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
+plot2 <- ggplot(subset(annotated_data, gene_alias %in% c(targets)), aes(x=L2FC_HT29_Control_plasmid_average_zscore, y= L2FC_HT29_Pict_plasmid_average_zscore, colour = gene_alias, shape = editor)) + 
+geom_point(position = pos, alpha = 1, size =1) +
+labs(title= "", x="HT-29 control vs plasmid (z-score)", y = "HT-29 pictilisib vs plasmid (z-score)", colour = "gene", shape = "editor") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_HT29_Pict_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 4 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position), "")), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black", "grey75", "red3")) +
+scale_shape_manual(values =c(2, 1)) +
+theme_classic()
+plot2 <- plot2 +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_Pict_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot2
+ggsave("Fig2a.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
+pos <- position_jitter(seed = 2, width = 0.2, height = 0.2)
+
+plot3 <- ggplot(subset(annotated_data, gene_alias %in% c(targets)), aes(x=L2FC_HT29_Control_plasmid_average_zscore, y= L2FC_HT29_DebCet_plasmid_average_zscore, colour = gene_alias, shape = editor)) + 
+geom_point(position = pos, alpha = 1, size = 1) +
+labs(title= "", x="HT-29 control vs plasmid (z-score)", y = "HT-29 dabrafenib + cetuximab vs plasmid (z-score)", colour = "gene", shape = "editor") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label= ifelse(L2FC_HT29_DebCet_plasmid_average_zscore > 10 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position),
+                      ifelse(L2FC_HT29_DebCet_plasmid_average_zscore > 5 & (is.na(Amino_Acid_Position) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == FALSE), paste(Amino_Acid_Position), 
+                                 ifelse(L2FC_HT29_DebCet_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == TRUE) & (is.na(most_severe_consequence) == FALSE) | L2FC_HT29_Control_plasmid_average_zscore > 3 & (is.na(Amino_Acid_Position) == TRUE) & (is.na(most_severe_consequence) == FALSE), paste(most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black", "grey75", "red3")) +
+scale_shape_manual(values =c(2, 1)) +
+theme_classic()
+plot3 <- plot3 +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_HT29_Control_plasmid_average_zscore, y = L2FC_HT29_DebCet_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot3
+ggsave("Fig4b.eps", width = 6, height = 4.3, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
+```
+
+```{r}
+# dot plots _ proliferation - PC9 average *** FOR NG EDITORS***
+# with rug plots
+
+targets <- c("EGFR", "KRAS", "MYC", "PARP1", "PARP2", "MAP2K1", "MAP2K2", "BCL2", "BRAF", "AKT1", "PIK3CA")
+
+pos <- position_jitter(seed = 2, width = 0.2, height = 0.2)
+
+plot1 <- ggplot(subset(annotated_data, Gene %in% c(targets)), aes(x=L2FC_PC9_Control_plasmid_average_zscore, y= L2FC_PC9_Gefit_plasmid_average_zscore, colour = Gene, shape = editor)) + 
+geom_point(position = pos, alpha = 1, size =1) +
+labs(title= " ", x="PC9 control vs plasmid (z-score)", y = "PC9 gefitinib vs plasmid (z-score)", colour = "gene") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore < -3.5 & L2FC_PC9_Control_plasmid_average_zscore > -0.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position, most_severe_consequence), ifelse(L2FC_PC9_Gefit_plasmid_average_zscore > 12 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Gefit_plasmid_average_zscore < -3.5 & L2FC_PC9_Control_plasmid_average_zscore > -0.5 & (is.na(Amino_Acid_Position) == TRUE), paste(Gene, most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black")) +
+scale_shape_manual(values =c(2, 1)) +
+theme_classic() +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Gefit_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot1
+ggsave("Fig2c.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
+plot2 <- ggplot(subset(annotated_data, Gene %in% c(targets)), aes(x=L2FC_PC9_Control_plasmid_average_zscore, y= L2FC_PC9_Osim_plasmid_average_zscore, colour = Gene, shape = editor)) + 
+geom_point(position = pos, alpha = 1, size =1) +
+labs(title= " ", x="PC9 control vs plasmid (z-score)", y = "PC9 osimertinib vs plasmid (z-score)", colour = "gene") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == FALSE), paste(Amino_Acid_Position), ifelse(L2FC_PC9_Osim_plasmid_average_zscore < -5 & L2FC_PC9_Control_plasmid_average_zscore > -1 & (is.na(Amino_Acid_Position) == FALSE), paste(Gene, Amino_Acid_Position, most_severe_consequence), ifelse(L2FC_PC9_Osim_plasmid_average_zscore > 5.5 & (is.na(Amino_Acid_Position) == TRUE) | L2FC_PC9_Osim_plasmid_average_zscore < -5 & L2FC_PC9_Control_plasmid_average_zscore > -1 & (is.na(Amino_Acid_Position) == TRUE), paste(most_severe_consequence), "")))), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c("grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black" )) +
+scale_shape_manual(values =c(2, 1)) +
+theme_classic() +
+  geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_PC9_Control_plasmid_average_zscore, y = L2FC_PC9_Osim_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot2
+ggsave("Fig2d.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
+```
+
+```{r}
+# H23 with rug plot ***FOR NG EDITORS***
+
+plot1 <- ggplot(subset(annotated_data, Gene %in% c(targets)), aes(x=L2FC_H23_Adag_plasmid_average_zscore, y= L2FC_H23_Sotor_plasmid_average_zscore, colour = Gene, shape = editor)) + 
+geom_point(position = pos, alpha = 1, size = 1) +
+labs(title= "", x="H23 adagrasib vs plasmid (z-score)", y = "H23 sotorasib vs plasmid (z-score)", colour = "gene") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_H23_Adag_plasmid_average_zscore > 4.2 & (is.na(Amino_Acid_Position) == FALSE) & Gene %in% c("KRAS", "MAP2K1", "MAP2K2") | L2FC_H23_Sotor_plasmid_average_zscore > 4.2 & (is.na(Amino_Acid_Position) == FALSE) & Gene %in% c("KRAS", "MAP2K1", "MAP2K2"), paste(Amino_Acid_Position), "")), size = 3, position = pos, max.overlaps = Inf, show.legend = FALSE) +
+scale_color_manual(values =c( "grey75", "red3", "royalblue", "turquoise3", "orange", "red", "springgreen4", "grey55","brown", "purple", "salmon","pink", "black")) +
+scale_shape_manual(values =c(2, 1)) +
+theme_classic() +
+geom_rug(data = subset(annotated_data, gene_alias %in% c("non-targeting", "essential")), aes(x = L2FC_H23_Adag_plasmid_average_zscore, y = L2FC_H23_Sotor_plasmid_average_zscore, colour = gene_alias), show.legend = FALSE)
+plot1
+ggsave("Fig2b.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
 ```
 
 ```{r}
@@ -1907,6 +2063,22 @@ kinase<-annotated_data %>%
 RBD/total*100
 #kinase
 kinase/total*100
+```
+
+```{r}
+# dot plots _ proliferation - MYC
+targets <- c("MYC")
+pos <- position_jitter(seed = 3, width = 0.2, height = 0.2)
+
+plot1 <- ggplot(subset(annotated_data, Gene %in% c(targets) & (is.na(Amino_Acid_Position_simple) ==FALSE)), aes(x=Amino_Acid_Position_simple, y= L2FC_HT29_Control_plasmid_average_zscore, shape = most_severe_consequence, colour = curated_Domain)) + 
+geom_point(position = pos, alpha = 1, size = 3) +
+labs(title= "", x="MYC amino acid position", y = "HT-29 control vs plasmid (z-score)", colour = "domain", shape = "consequence") +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_text_repel(aes(label=ifelse(L2FC_HT29_Control_plasmid_average_zscore < -5 & most_severe_consequence == "missense", paste(Amino_Acid_Position), ifelse(L2FC_HT29_Control_plasmid_average_zscore > -1, paste(PTM), ""))), size = 4, position = pos, max.overlaps = Inf) +
+scale_color_manual(values =c("black", "purple", "grey45", "royalblue", "orange", "red")) +
+scale_shape_manual(values=c(1, 19, 2, 11, 7, 3)) +
+theme_classic()
+plot1
 ```
 
 ```{r}
@@ -2268,6 +2440,23 @@ annotate("text", y = 12.1, x = 2.4, label = paste0("p=", formatC(t_test_4$p.valu
 theme_classic()
 plot4
 ggsave("FigS1b_3.eps", width = 6.2, height = 5, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+```
+```{r}
+
+NT_HT29
+essential_HT29
+
+NT_H23
+essential_H23
+
+NT_PC9
+essential_PC9
+
+NT_MHHES1 %>% 
+  filter(is.na(L2FC_MHHES1_Control_plasmid_average_zscore) == FALSE)
+
+essential_MHHES1 %>% 
+  filter(is.na(L2FC_MHHES1_Control_plasmid_average_zscore) == FALSE)
 ```
 
 ```{r}
@@ -3055,7 +3244,6 @@ geom_vline(xintercept=c(0,0),linetype="dotted") +
   scale_color_manual( values =c("black", "salmon", "grey65")) +
 theme_classic(base_size = 12)
 plot4
-ggsave("Fig_prime5c.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
 
 plot5 <- ggplot(pegRNA_counts_osi, aes(y= L2FC_PC9_osi_control_average_zscore, x= L2FC_PC9_control_plasmid_average_zscore, colour = mutation_type)) +
 geom_pointdensity(size=3,  position = pos) +
@@ -3080,6 +3268,20 @@ geom_vline(xintercept=c(0,0),linetype="dotted") +
   scale_color_manual( values =c("black", "salmon", "grey65")) +
 theme_classic(base_size = 12)
 plot7
+```
+```{r}
+plot4 <- ggplot(pegRNA_counts_osi, aes(y= L2FC_PC9_osi_plasmid_average_zscore, x= L2FC_PC9_control_plasmid_average_zscore, colour = mutation_type)) +
+geom_point(size=2,  position = pos) +
+labs(title= "", y = "PC9 - osimertinib vs plasmid (z-score)", x = "PC9 - control vs plasmid (z-score)", colour = "consequence") +
+geom_text_repel(aes(label=ifelse(L2FC_PC9_osi_plasmid_average_zscore > 1 & L2FC_PC9_osi_plasmid_1_zscore > 1 & L2FC_PC9_osi_plasmid_2_zscore > 1 | L2FC_PC9_control_plasmid_average_zscore < -1.5 | L2FC_PC9_control_plasmid_1_zscore > 1.1 & L2FC_PC9_control_plasmid_2_zscore > 1.1 | mutation %in% c("T790M"), paste(mutation), "")), size = 3, position = pos, max.overlaps = Inf) +
+geom_hline(yintercept=c(0,0),linetype="dotted") +
+geom_vline(xintercept=c(0,0),linetype="dotted") +
+  scale_shape_manual(values =c(1)) +
+  scale_color_manual( values =c("black", "salmon", "grey65")) +
+theme_classic()
+plot4
+ggsave("Fig_prime5c.eps", width = 6, height = 4, path ="/Users/mc32/Documents/Matt_Coelho/Bioinformatics/Res1/figures_export")
+
 ```
 
 ```{r}
@@ -4991,4 +5193,110 @@ NG_revisions_data_validation %>%
 NG_revisions_data_validation %>%
   filter(FDR_MAGeCK_MHHES1_Nirap <0.01) %>%
   distinct()
+```
+
+```{r}
+# mave db deposit
+NG_revisions_data_validation
+# select only single changes with missense for predicted
+# select amplicon seq changes (validated)
+# change single letter code to three letter code
+#export these as csv files
+
+NG_revisions_data_validation_MAVE <-
+  NG_revisions_data_validation %>%
+  mutate(hgvs_pro_predicted = paste0("p.", Edited_AA, Amino_Acid_Position, New_AA))
+
+NG_revisions_data_validation_MAVE
+
+NG_revisions_data_validation_MAVE %>%
+  filter(is.na(Amino_Acid_Position) == FALSE & Amino_Acid_Position != "") %>%
+  filter(str_detect(hgvs_pro_predicted, ";") == FALSE) %>%
+  filter(most_severe_consequence == "missense") %>%
+  select(Gene, hgvs_pro_predicted, most_severe_consequence, L2FC_HT29_DebCet_plasmid_average_zscore, L2FC_HT29_Pict_plasmid_average_zscore, L2FC_HT29_Tram_plasmid_average_zscore, L2FC_PC9_Gefit_plasmid_average_zscore, L2FC_PC9_Osim_plasmid_average_zscore, L2FC_H23_Sotor_plasmid_average_zscore, L2FC_H23_Adag_plasmid_average_zscore, L2FC_MHHES1_Olap_plasmid_average_zscore, L2FC_MHHES1_Nirap_plasmid_average_zscore) %>%
+  mutate(hgvs_pro_predicted = str_replace_all(string = hgvs_pro_predicted, 
+                c("A" = "Ala",
+                  "R" = "Arg",
+                  "N" = "Asn",
+                  "D" = "Asp",
+                  "C" = "Cys",
+                  "G" = "Gly",
+                  "E" = "Glu",
+                  "Q" = "Gln",
+                  "H" = "His",
+                  "I" = "Ile",
+                  "L" = "Leu",
+                  "K" = "Lys",
+                  "M" = "Met",
+                  "P" = "Pro",
+                  "F" = "Phe",
+                  "S" = "Ser",
+                  "T" = "Thr",
+                  "W" = "Trp",
+                  "Y" = "Tyr",
+                  "V" = "Val",
+                  "\\*" = "Ter"))) %>%
+  write.csv("predicted_MAVEdb.csv")
+
+NG_revisions_data_validation_MAVE %>%
+  filter(is.na(amplicon_seq_edit) == FALSE & amplicon_seq_edit != "") %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "EGFR")) %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "MAP2K1")) %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "MAP2K2")) %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "KRAS")) %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "AKT1")) %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "PIK3CA")) %>%
+  mutate(amplicon_seq_edit = str_remove_all(amplicon_seq_edit, "BRAF")) %>%
+  rename(hgvs_pro_validated = amplicon_seq_edit) %>%
+  select(Gene, hgvs_pro_validated, consequence_amp_seq, L2FC_HT29_DebCet_plasmid_average_zscore, L2FC_HT29_Pict_plasmid_average_zscore, L2FC_HT29_Tram_plasmid_average_zscore, L2FC_PC9_Gefit_plasmid_average_zscore, L2FC_PC9_Osim_plasmid_average_zscore, L2FC_H23_Sotor_plasmid_average_zscore, L2FC_H23_Adag_plasmid_average_zscore, L2FC_MHHES1_Olap_plasmid_average_zscore, L2FC_MHHES1_Nirap_plasmid_average_zscore) %>%
+  mutate(hgvs_pro_validated = str_replace_all(string = hgvs_pro_validated, 
+                c("A" = "Ala",
+                  "R" = "Arg",
+                  "N" = "Asn",
+                  "D" = "Asp",
+                  "C" = "Cys",
+                  "G" = "Gly",
+                  "E" = "Glu",
+                  "Q" = "Gln",
+                  "H" = "His",
+                  "I" = "Ile",
+                  "L" = "Leu",
+                  "K" = "Lys",
+                  "M" = "Met",
+                  "P" = "Pro",
+                  "F" = "Phe",
+                  "S" = "Ser",
+                  "T" = "Thr",
+                  "W" = "Trp",
+                  "Y" = "Tyr",
+                  "V" = "Val",
+                  "\\*" = "Ter"))) %>%
+  write.csv("validated_MAVEdb.csv")
+
+```
+
+```{r}
+# make protein_change_simplified into three letter code for compatibility
+amplicon_seq_data <- mutate(amplicon_seq_data, protein_change_simplified = ifelse(protein_change_simplified != c("intronic", "splice variant"), str_replace_all(string = protein_change_simplified, 
+                c("A" = "Ala",
+                  "R" = "Arg",
+                  "N" = "Asn",
+                  "D" = "Asp",
+                  "C" = "Cys",
+                  "G" = "Gly",
+                  "E" = "Glu",
+                  "Q" = "Gln",
+                  "H" = "His",
+                  "I" = "Ile",
+                  "L" = "Leu",
+                  "K" = "Lys",
+                  "M" = "Met",
+                  "P" = "Pro",
+                  "F" = "Phe",
+                  "S" = "Ser",
+                  "T" = "Thr",
+                  "W" = "Trp",
+                  "Y" = "Tyr",
+                  "V" = "Val",
+                  "\\*" = "Ter")), protein_change_simplified))
 ```
